@@ -6,16 +6,29 @@ public class paddle : MonoBehaviour
 {
 
     public bool isPlayerOne;
+    public float speed;
+    public Rigidbody2D rig;
+    
+    private float mov;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    
 
     // Update is called once per frame
     void Update()
     {
-        
+
+        if (isPlayerOne)
+        {
+
+            mov = Input.GetAxisRaw("Vertical");
+
+        }
+        else
+        {
+            mov = Input.GetAxisRaw("Vertical1");
+        }
+
+        rig.velocity = new Vector2(rig.velocity.x, mov * speed);
+
     }
 }
