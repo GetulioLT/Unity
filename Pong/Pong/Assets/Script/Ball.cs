@@ -10,19 +10,25 @@ public class Ball : MonoBehaviour
     public GameObject ball;
     public Transform ret;
     public float speedUp;
+    float speedConstante = 0;
+    float speedUpNow = 0;
 
     // Start is called before the first frame update
     void Start()
     {
 
-        speedUp = 1;
+        
 
     }
 
     // Update is called once per frame
     void Update()
     {
+
+        speedConstante = speedUp / 100;
+
         Lauch();
+
     }
 
     private void Lauch()
@@ -46,11 +52,11 @@ public class Ball : MonoBehaviour
         if (collision.gameObject.tag == "Gol1" || collision.gameObject.tag == "Gol2")
         {
 
-            speedUp = 1;
-
             ret.position = new Vector2(0, 0);
 
             rig.velocity = new Vector2(0, 0);
+
+            speedUpNow = 0;
 
         }
 
@@ -62,9 +68,12 @@ public class Ball : MonoBehaviour
         if (collision.gameObject.tag == "Wall")
         {
 
-            speedUp += 0.05f;
 
-            rig.velocity = new Vector2(rig.velocity.x * speedUp, rig.velocity.y * speedUp);
+            rig.AddForce(new Vector2(rig.velocity.x * speedConstante, rig.velocity.y * speedConstante), ForceMode2D.Impulse);
+
+            speedUpNow += speedConstante;
+
+            Debug.Log($"Velocidade a mais atual: {speedUpNow}");
 
         }
 
